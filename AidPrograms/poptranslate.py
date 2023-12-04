@@ -13,34 +13,21 @@ def findTranslate(text):
     try:
         response = requests.get(api_url)
         res_j = response.json()
-        # print(type(res_j[-1]))
         res_dict = res_j[-1]
-        # print(res_dict.keys())
-        # print(res_dict['word'])
         keys = res_dict.keys()
-        # print(keys)
         meaning = res_dict['meaning']
         ans = ''
         for key in meaning.keys():
 
             try:
                 aMeaning = meaning[key]
-                # print(ans.keys())
                 ans += (aMeaning[0]['definition'])
-                # print(ans)
             except(ValueError):
                 print('DIDN"T FOUND')
             ans +='\n\n'
     except KeyError:
             ans += "TRY AGAIN" 
-    # print(ans)
     return ans
-# definition = meaning["definitions"][0]["definition"]
-# example = meaning["definitions"][0]["example"]
-# print(definition)
-# print(res_j.shape)
-
-# findTranslate('morning')
 
 def popup_window(text):
     print('------------------')
@@ -54,12 +41,12 @@ def on_press_key(key):
         if(key.char == "`"):
             keyboard.press(Key.ctrl_l)
             keyboard.press('c')
+            keyboard.release(Key.ctrl_l)
             clipboard_contents = subprocess.check_output([
                 "xclip", "-selection", "clipboard", "-o"]).decode("utf-8")
-            # print("TRASLATING ", clipboard_contents)
             popup_window(findTranslate(clipboard_contents))
     except(AttributeError):
-        print("DIDIN")
+        print("No match for ` key!")
 
 with Listener(on_press=on_press_key) as listener:
     listener.join()

@@ -4,14 +4,19 @@
 
 P=$(ls -t ~/Downloads | head -1)
 # echo ~/Downloads/$P.pptx
-
 echo $P
-# cat ~/Downloads/"$P"
 # We assume the file is going to be .pptx (always)
-Name=${P::-5}
+PATH_DOW=~/Downloads/"$P"
+if [[ $P == *.pptx ]]; then
+  libreoffice --headless --convert-to pdf --outdir . "$PATH_DOW"
+  rm ~/Downloads/"$P"
 
-echo $Name
-soffice --convert-to pdf ~/Downloads/"$P"
-mv "$Name".pdf ~/School/notes
+elif [[ $P == *.pdf ]]; then
+  mv "$PATH_DOW" . 
+fi
+
+# Name=${P::-5}
+# echo $Name
+# mv "$Name".pdf .
 
 
