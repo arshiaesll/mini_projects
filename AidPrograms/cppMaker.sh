@@ -6,6 +6,8 @@ if [ -z $1 ]; then
 fi
 
 mkdir $1 
+cp ~/selfstudy/Utils/resources/cppTemplate.cc $1
+mv $1/cppTemplate.cc $1/$1.cc
 touch $1/$1.cc
 touch $1/makefile
 echo "flags= -std=c++17 -Wall -I ." >> $1/makefile
